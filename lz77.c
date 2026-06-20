@@ -1,37 +1,17 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
-#define SEARCH_BUFFER_SIZE     7
-#define LOOK_AHEAD_BUFFER_SIZE 6
-#define WINDOW_SIZE            SEARCH_BUFFER_SIZE + LOOK_AHEAD_BUFFER_SIZE
-#define DATA_SIZE              17
-
-typedef struct {
-    uint32_t longest_match_len;
-    int32_t  longest_match_index;
-} longest_match_t;
-
-typedef struct {
-    uint32_t distance;
-    uint32_t length;
-    uint32_t character;
-} lz77_t;               // triple (D, L, C), like : (0,0,C)
+#include "lz77.h"
 
 char data[] = {
     'a', 'b', 'c', 'd', 'a', 'b', 'c',
     'a', 'b', 'c', 'd', 'a', 'b', 'c',
     'x', 'y', 'z'
 };
-
 uint32_t window[WINDOW_SIZE] = {0};
 uint32_t data_pointer = LOOK_AHEAD_BUFFER_SIZE;
 uint32_t window_pointer = SEARCH_BUFFER_SIZE;
 lz77_t lz77_encode_data[16];
-
-void init_look_ahead_buffer();
-bool shift_window(int skip);
-longest_match_t find_match();
-void print_lz77_encode_data();
 
 int main() {
     init_look_ahead_buffer();
@@ -63,7 +43,25 @@ int main() {
         }
     }
 
+    unsigned char bytes[20];
+    for (int i = 0, j = 0; i < 20 && j < 20; i++,j++) {
+        if (lz77_encode_data[i].distance == 0) {
+            bytes[j] = 0;
+            bytes[j+1] = lz77_encode_data[i].character;
+            j += 1;
+        }else {
+            bytes[j] = 1;
+            bytes[j+1] = lz77_encode_data[i].distance;
+            bytes[j+2] = lz77_encode_data[i].length;
+            bytes[j+3] = lz77_encode_data[i].character;
+            j += 3;
+        }
+    }
+
     print_lz77_encode_data();
+    for (int i = 0; i < 20; i++) {
+        printf("%02x ", bytes[i]);
+    }
     return 0;
 }
 
