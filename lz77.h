@@ -2,7 +2,7 @@
 #include <stdint.h>
 #define SEARCH_BUFFER_SIZE     7
 #define LOOK_AHEAD_BUFFER_SIZE 6
-#define WINDOW_SIZE            SEARCH_BUFFER_SIZE + LOOK_AHEAD_BUFFER_SIZE
+#define WINDOW_SIZE            (SEARCH_BUFFER_SIZE + LOOK_AHEAD_BUFFER_SIZE)
 #define DATA_SIZE              17
 #define MATCH_TOKEN            1
 #define UNMATCH_TOKEN          0
