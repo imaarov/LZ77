@@ -8,3 +8,8 @@ A reference consists of a triplet (D, L, C), where D is the distance, L is the l
 However, for better functionality, minimum and maximum length limits are typically imposed on the matched segment. This is because replacement is not always beneficial; in some cases, the triplet is the same size as the data it replaces, or even larger.
 
 As a result, optimal parameters may vary depending on the specific input data.
+
+For DEFLATE compatiblity we should consider this:
+- 0-255   = literals
+- 256     = EOB (End of Block)
+- 257-285 = match lengths
