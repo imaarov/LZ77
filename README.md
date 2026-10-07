@@ -1,7 +1,7 @@
 # LZ77
 This is an implementation of the LZ77 algorithm, written in C.
 
-LZ77 is an algorithm that removes redundant and duplicate ddata by replacing them with references.
+LZ77 is an algorithm that removes redundant and duplicate data by replacing them with references.
 
 A reference consists of a triplet (D, L, C), where D is the distance, L is the length of the match, and C is the next character following the matched segment (if any). Using this approach, redundant data is replace with smaller references, which helps reduce the overall data size.
 
